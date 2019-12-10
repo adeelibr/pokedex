@@ -1,46 +1,38 @@
 // The <App /> component is responsible for rendering the two main columns
-import React from "react";
-import { BaseStyles } from "@primer/components";
-import { Flex } from "@primer/components";
-import PokemonList from "./columns/PokemonList";
-import PokemonDetails from "./columns/PokemonDetails";
+import React from 'react'
+import { BaseStyles } from '@primer/components'
+import { Flex } from '@primer/components'
 
-class App extends React.Component {
-  state = {
-    selectedPokemon: null
-  };
+const PokemonList = React.lazy(() =>
+  import('./columns/PokemonList' /* webpackChunkName: "PokemonList" */)
+)
+const PokemonDetails = React.lazy(() =>
+  import('./columns/PokemonDetails' /* webpackChunkName: "PokemonDetails" */)
+)
 
-  setSelectedPokemon = name => {
-    this.setState({
-      selectedPokemon: name
-    });
-  };
-
-  componentDidMount() {
-    this.updateDocumentTitle();
+const App = () => {
+  const [name, setName] = React.useState(null)
+  const setSelectedPokemon = newName => {
+    setName(newName)
   }
-
-  componentDidUpdate(_, prevState) {
-    if (prevState.selectedPokemon !== this.state.selectedPokemon) {
-      this.updateDocumentTitle();
-    }
-  }
-
-  updateDocumentTitle() {
-    const { selectedPokemon } = this.state;
-    document.title = `${selectedPokemon ? `${selectedPokemon} | ` : ""}Pokedex`;
-  }
-
-  render() {
-    return (
-      <BaseStyles>
-        <Flex>
-          <PokemonList setSelectedPokemon={this.setSelectedPokemon} />
-          <PokemonDetails name={this.state.selectedPokemon} />
-        </Flex>
-      </BaseStyles>
-    );
-  }
+  React.useEffect(
+    () => {
+      document.title = `${name ? `${name} | ` : ''}Pokedex`
+    },
+    [name]
+  )
+  return (
+    <BaseStyles>
+      <Flex>
+        <React.Suspense fallback={<p>Loading list ..</p>}>
+          <PokemonList setSelectedPokemon={setSelectedPokemon} />
+        </React.Suspense>
+        <React.Suspense fallback={<p>Loading details ..</p>}>
+          <PokemonDetails name={name} />
+        </React.Suspense>
+      </Flex>
+    </BaseStyles>
+  )
 }
 
-export default App;
+export default App
