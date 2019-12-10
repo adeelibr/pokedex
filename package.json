@@ -7,13 +7,13 @@
     "build": "react-scripts build"
   },
   "dependencies": {
-    "@nice-boys/components": "^0.2.1",
-    "@primer/components": "^15.1.1",
-    "pokeapi-js-wrapper": "^1.1.2",
-    "react": "^0.0.0-experimental-b53ea6ca0",
-    "react-dom": "^0.0.0-experimental-b53ea6ca0",
+    "@nice-boys/components": "0.2.1",
+    "@primer/components": "15.1.1",
+    "pokeapi-js-wrapper": "1.1.2",
+    "react": "0.0.0-experimental-b53ea6ca0",
+    "react-dom": "0.0.0-experimental-b53ea6ca0",
     "react-scripts": "3.2.0",
-    "styled-components": "^5.0.0-rc.2"
+    "styled-components": "5.0.0-rc.2"
   },
   "devDependencies": {
     "husky": "^3.0.9",
@@ -29,12 +29,12 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "husky": {
+  "xhusky": {
     "hooks": {
       "pre-commit": "lint-staged"
     }
   },
-  "lint-staged": {
+  "xlint-staged": {
     "*.{js,ts,tsx}": [
       "eslint --fix",
       "prettier --write",
